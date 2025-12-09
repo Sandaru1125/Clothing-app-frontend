@@ -1,4 +1,4 @@
-const BASE_URL = "http://192.168.8.101:4500"; // ← replace with your IPv4 address
+const BASE_URL = "http://192.168.8.101:4500"; 
 
 export const signup = async (data) => {
   try {

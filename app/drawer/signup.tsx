@@ -1,12 +1,15 @@
 import { router } from "expo-router";
+import Toast from "react-native-toast-message";
+
+
 import React, { useState } from "react";
 import {
-    Alert,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { signup } from "../../services/api.js";
 import Footer from "./footer";
@@ -48,7 +51,11 @@ export default function Signup() {
 
     if (result?.ok) {
       const message = result.body?.message || "Account created successfully!";
-      Alert.alert("Success", message);
+      Toast.show({
+        type: "success",
+        text1: "Success",
+        text2: message,
+      });
       router.push("/drawer/login");
       return;
     }
