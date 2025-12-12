@@ -1,8 +1,7 @@
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 
-
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Alert,
   StyleSheet,
@@ -11,8 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { signup } from "../../services/api.js";
-import Footer from "./footer";
+
+import { signup } from "../../../services/api";
+import Footer from "../../components/Homefooter";
 
 export default function Signup() {
   const [fullName, setFullName] = useState("");
@@ -31,7 +31,7 @@ export default function Signup() {
       return;
     }
 
-    const [firstName, ...rest] = fullName.split(" ");
+    const [firstName, ...rest] = fullName.trim().split(" ");
     const lastName = rest.join(" ") || "Unknown";
 
     const result = await signup({
@@ -42,26 +42,25 @@ export default function Signup() {
       role: "user",
     });
 
-    // Log full response for debugging (stringified so console shows full contents)
     console.log("signup result:", JSON.stringify(result, null, 2));
 
-    if (!result?.ok) {
-      console.error("signup error details:", result);
-    }
-
     if (result?.ok) {
-      const message = result.body?.message || "Account created successfully!";
       Toast.show({
         type: "success",
         text1: "Success",
-        text2: message,
+        text2: result.body?.message || "Account created successfully!",
       });
-      router.push("/drawer/login");
+
+      // 🔥 Navigate to login screen
+      router.push("/auth/LoginScreen");
       return;
     }
 
-    // Show detailed error when available
-    const errorMessage = result?.body?.message || result?.error || `Request failed (status ${result?.status})`;
+    const errorMessage =
+      result?.body?.message ||
+      result?.error ||
+      `Request failed (status ${result?.status})`;
+
     Alert.alert("Error", errorMessage);
   };
 
@@ -106,19 +105,21 @@ export default function Signup() {
           onChangeText={setConfirmPassword}
         />
 
+        {/* 🔵 SIGN UP BUTTON */}
         <TouchableOpacity style={styles.signupBtn} onPress={handleSignup}>
           <Text style={styles.signupBtnText}>Sign Up</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => router.push("/drawer/login")}>
+        {/* Already have an account */}
+        <TouchableOpacity onPress={() => router.push("/auth/LoginScreen")}>
           <Text style={styles.loginLink}>
             Already have an account?{" "}
             <Text style={styles.loginText}>Login</Text>
           </Text>
         </TouchableOpacity>
-      </View>
 
-      <Footer />
+        <Footer />
+      </View>
     </>
   );
 }

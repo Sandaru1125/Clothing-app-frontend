@@ -1,6 +1,9 @@
-import React from "react";
+import { router } from "expo-router";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Footer from './footer';
+import Footer from "./components/Homefooter";
+
+
+
 
 export default function Home() {
   return (
@@ -19,22 +22,33 @@ export default function Home() {
       {/* Banner */}
       <View style={styles.banner}>
         <Image
-          source={require("../../assets/images/img3.jpg")}
+          source={require("../assets/images/img3.jpg")}
           style={styles.bannerImage} />
       </View>
 
       {/* Categories */}
       <Text style={styles.sectionTitle}>Categories</Text>
       <View style={styles.categories}>
-        <TouchableOpacity style={styles.categoryCard}>
+        <TouchableOpacity style={styles.categoryCard}
+        
+        onPress={() => router.push("/screens/Home/WomenScreen")}
+        
+        >
           <Text style={styles.categoryText}>Women</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.categoryCard}>
+        <TouchableOpacity style={styles.categoryCard}
+        
+             onPress={() => router.push("/screens/Home/MenScreen")}
+        
+        >
           <Text style={styles.categoryText}>Men</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.categoryCard}>
+        <TouchableOpacity style={styles.categoryCard}
+        
+           onPress={() => router.push("/screens/Home/KidsScreen")}
+        >
           <Text style={styles.categoryText}>Kids</Text>
         </TouchableOpacity>
       </View>
@@ -45,7 +59,7 @@ export default function Home() {
 
         <View style={styles.productCard}>
           <Image
-            source={require("../../assets/images/img0.jpg")}
+            source={require("../assets/images/img0.jpg")}
             style={styles.productImage} />
           <Text style={styles.productName}>Summer Floral Dress</Text>
           <Text style={styles.price}>$45.00</Text>
@@ -53,7 +67,7 @@ export default function Home() {
 
         <View style={styles.productCard}>
           <Image
-            source={require("../../assets/images/img1.jpg")}
+            source={require("../assets/images/img1.jpg")}
             style={styles.productImage} />
           <Text style={styles.productName}>{"Casual Men's T-Shirt"}</Text>
           <Text style={styles.price}>$25.00</Text>

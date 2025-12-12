@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "app/screens/signup.jsx", "app/screens/men.jsx", "app/screens/login.jsx", "app/screens/kids.jsx", "app/screens/cart.jsx", "app/screens/footer.jsx", "app/screens/home.jsx", "admin/adminProfile.jsx", "admin/adminProduct.jsx", "admin/adminOrder.jsx", "admin/adminFooter.jsx", "app/drawer/women.jsx", "app/settings.jsx", "app/profile.jsx", "app/index.jsx"  ]
 }
