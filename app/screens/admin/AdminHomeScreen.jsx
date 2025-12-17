@@ -17,7 +17,7 @@ const AdminHomeScreen = () => {
           style={styles.card}
           onPress={() => router.push("/screens/admin/AdminProductsScreen")}
         >
-          <AntDesign name="appstore-o" size={36} color="#4A90E2" />
+          <AntDesign name="appstore1" size={36} color="#4A90E2" />
           <Text style={styles.cardTitle}>Manage Products</Text>
         </TouchableOpacity>
 

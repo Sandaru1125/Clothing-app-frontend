@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { createContext, useState } from "react";
 import * as api from "../../services/api";
@@ -11,8 +12,10 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const response = await api.login({ email, password });
     if (response.ok) {
-      const userData = response.body.user;
+      const { user: userData, token } = response.body;
       setUser(userData);
+      await AsyncStorage.setItem("token", token); // Store the token
+
       if (userData.role === "admin") {
         setIsAdmin(true);
         router.replace("/screens/admin/AdminHomeScreen");
@@ -25,9 +28,10 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser(null);
     setIsAdmin(false);
+    await AsyncStorage.removeItem("token");
   };
 
   return (

@@ -20,7 +20,7 @@ export default function Footer() {
 
       {/* Signup */}
       <TouchableOpacity onPress={() => router.push("/screens/auth/SignupScreen")} style={styles.iconBox}>
-        <AntDesign name="adduser" size={26} color="#333" />
+        <AntDesign name="user-add" size={26} color="#333" />
         <Text style={styles.label}>Sign Up</Text>
       </TouchableOpacity>
 

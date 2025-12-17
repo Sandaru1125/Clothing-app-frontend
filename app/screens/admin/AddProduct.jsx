@@ -1,15 +1,16 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Picker } from '@react-native-picker/picker';
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import {
-    ActivityIndicator,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity
 } from "react-native";
 import Mediauplod from "../../utils/mediauplod";
 
@@ -24,6 +25,7 @@ export default function AddProduct({ navigation }) {
   const [images, setImages] = useState([]);
   const [stock, setStock] = useState("");
   const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState("");
 
 
   // 📸 Pick multiple images
@@ -54,17 +56,22 @@ export default function AddProduct({ navigation }) {
         uploadedImages.push(uploadedUrl);
       }
 
+      // 👇 Check if any images were uploaded
+      if (uploadedImages.length === 0) {
+        alert("Please select at least one image.");
+        setLoading(false);
+        return;
+      }
+
       const token = await AsyncStorage.getItem("token");
 
       const productData = {
-        productId,
         name,
-        altName: altNamesArray,
-        price,
-        labeledprice,
         description,
-        images: uploadedImages,
-        stock,
+        price: Number(price), // Ensure price is a number
+        category,
+        imageUrl: uploadedImages[0], // Use the first image
+        stock: Number(stock), // Ensure stock is a number
       };
 
       await axios.post(
@@ -138,6 +145,21 @@ export default function AddProduct({ navigation }) {
         keyboardType="numeric"
         placeholder="0.00"
       />
+     
+
+        {/* Original Price */}
+      <Text style={styles.label}>clothing type</Text>
+      <Picker
+      style={styles.input}
+      selectedValue={category}
+      onValueChange={(itemValue) => setCategory(itemValue)}
+    >
+      <Picker.Item label="Select Category" value="" />
+      <Picker.Item label="Men" value="men" />
+      <Picker.Item label="Women" value="women" />
+      <Picker.Item label="Kids" value="kids" />
+    </Picker>
+
 
       {/* Stock */}
       <Text style={styles.label}>Stock Quantity *</Text>

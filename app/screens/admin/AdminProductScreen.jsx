@@ -27,7 +27,7 @@ export default function AdminProductsScreen() {
   async function loadProducts() {
     try {
       const response = await axios.get(
-        process.env.EXPO_PUBLIC_BACKEND_URL + "/api/product"
+        "http://192.168.8.102:4500/api/products"
       );
       setProducts(response.data);
     } catch (error) {
@@ -58,7 +58,7 @@ export default function AdminProductsScreen() {
           onPress: async () => {
             try {
               await axios.delete(
-                process.env.EXPO_PUBLIC_BACKEND_URL + "/api/product/" + id
+                "http://192.168.8.102:4500/api/product/" + id
               );
               loadProducts();
               Alert.alert("Success", "Product deleted successfully");
@@ -116,8 +116,23 @@ export default function AdminProductsScreen() {
 
   return (
     <><View style={styles.container}>
+           <View>
+            <View>
           <Text style={styles.heading}>Product Management</Text>
-
+          </View>
+         <View>
+          <TouchableOpacity
+            style={styles.addproduct}
+            onPress={() => {
+              router.push("/screens/admin/AddProduct");
+            }}
+          >
+            <Text style={{ color: "#4A90E2", fontWeight: "bold" }}>
+              + Add New Product
+            </Text>
+          </TouchableOpacity>
+          </View>
+          </View>
           <TextInput
               style={styles.searchBox}
               placeholder="Search by name or ID..."
@@ -193,4 +208,28 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     gap: 20,
   },
+
+
+addproduct: {
+  backgroundColor: "#EAF3FF",
+  borderWidth: 1,
+  borderColor: "#4A90E2",
+  paddingVertical: 14,
+  paddingHorizontal: 20,
+  borderRadius: 12,
+  alignItems: "center",
+  justifyContent: "center",
+  marginVertical: 15,
+
+  // Shadow for Android
+  elevation: 4,
+
+  // Shadow for iOS
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.15,
+  shadowRadius: 6,
+},
+
+
 });

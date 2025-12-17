@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -31,9 +32,9 @@ export default function AdminOrderScreen() {
 
   async function fetchOrders() {
     try {
-      const token = await localStorage.getItem("token");
+      const token = await AsyncStorage.getItem("token");
       const res = await axios.get(
-        process.env.EXPO_PUBLIC_BACKEND_URL + "/api/order",
+        "http://192.168.8.102:4500/api/order",
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -48,9 +49,9 @@ export default function AdminOrderScreen() {
 
   async function changeStatus(orderID, status) {
     try {
-      const token = await localStorage.getItem("token");
+      const token = await AsyncStorage.getItem("token");
       await axios.put(
-        process.env.EXPO_PUBLIC_BACKEND_URL + "/api/order/" + orderID,
+        "http://192.168.8.102:4500/api/order/" + orderID,
         { status },
         { headers: { Authorization: "Bearer " + token } }
       );
@@ -72,9 +73,9 @@ export default function AdminOrderScreen() {
           style: "destructive",
           onPress: async () => {
             try {
-              const token = localStorage.getItem("token");
+              const token = await AsyncStorage.getItem("token");
               await axios.delete(
-                process.env.EXPO_PUBLIC_BACKEND_URL + "/api/order/" + id,
+                "http://192.168.8.102:4500/api/order/" + id,
                 {
                   headers: { Authorization: "Bearer " + token },
                 }

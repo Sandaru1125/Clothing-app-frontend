@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
@@ -17,11 +18,11 @@ export default function AdminUsersScreen() {
   const [updating, setUpdating] = useState(null); // user_id when updating
 
   const fetchUsers = async () => {
-    const token = await localStorage.getItem("token");
+    const token = await AsyncStorage.getItem("token");
 
     try {
       const res = await axios.get(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/user`,
+        `http://192.168.8.102:4500/api/user`,
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -43,11 +44,11 @@ export default function AdminUsersScreen() {
   // Update user role
   const changeRole = async (userId, newRole) => {
     setUpdating(userId);
-    const token = await localStorage.getItem("token");
+    const token = await AsyncStorage.getItem("token");
 
     try {
       await axios.put(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/user/${userId}/role`,
+        `http://192.168.8.102:4500/api/user/${userId}/role`,
         { role: newRole },
         {
           headers: { Authorization: "Bearer " + token },
