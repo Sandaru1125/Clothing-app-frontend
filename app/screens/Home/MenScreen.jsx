@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Footer from "../../components/Homefooter";
 
 const BASE_URL = "http://192.168.8.102:4500"; // change if needed
 
@@ -42,7 +43,7 @@ export default function MenScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <><View style={styles.container}>
       <Text style={styles.title}>Men Collection</Text>
 
       <FlatList
@@ -55,18 +56,18 @@ export default function MenScreen() {
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.price}>Rs. {item.price}</Text>
 
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn}
+              
+
+            >
               <Text style={styles.btnText}>Add to Cart</Text>
             </TouchableOpacity>
           </View>
         )}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>
-            No men products available
-          </Text>
-        }
-      />
-    </View>
+        ListEmptyComponent={<Text style={styles.emptyText}>
+          No men products available
+        </Text>} />
+    </View><Footer /></>
   );
 }
 const styles = StyleSheet.create({

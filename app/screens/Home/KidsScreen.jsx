@@ -55,7 +55,11 @@ export default function KidsScreen() {
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.price}>Rs. {item.price}</Text>
 
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn}
+            
+              
+
+            >
               <Text style={styles.btnText}>Add to Cart</Text>
             </TouchableOpacity>
           </View>

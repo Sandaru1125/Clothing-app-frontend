@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Footer from "../../components/Homefooter";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function LoginScreen({ navigation }) {
@@ -25,7 +26,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <><View style={styles.container}>
       <Text style={styles.title}>Welcome Back</Text>
       <Text style={styles.subtitle}>Login to your account</Text>
 
@@ -37,8 +38,7 @@ export default function LoginScreen({ navigation }) {
           style={styles.textInput}
           keyboardType="email-address"
           autoCapitalize="none"
-          onChangeText={(text) => setEmail(text)}
-        />
+          onChangeText={(text) => setEmail(text)} />
       </View>
 
       {/* Password Input */}
@@ -49,15 +49,13 @@ export default function LoginScreen({ navigation }) {
           placeholder="Password"
           style={styles.textInput}
           secureTextEntry={!showPass}
-          onChangeText={(text) => setPassword(text)}
-        />
+          onChangeText={(text) => setPassword(text)} />
 
         <TouchableOpacity onPress={() => setShowPass(!showPass)}>
           <Ionicons
             name={showPass ? "eye-off-outline" : "eye-outline"}
             size={20}
-            color="#666"
-          />
+            color="#666" />
         </TouchableOpacity>
       </View>
 
@@ -75,9 +73,8 @@ export default function LoginScreen({ navigation }) {
           Don&apos;t have an account? <Text style={styles.signupLink}>Sign Up</Text>
         </Text>
       </TouchableOpacity>
-      
-    </View>
-    
+
+    </View><Footer /></>
   );
 }
 const styles = StyleSheet.create({

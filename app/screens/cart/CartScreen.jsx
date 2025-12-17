@@ -1,15 +1,52 @@
-import React, { useContext } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from "react-native";
-
 import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+import { useLocalSearchParams } from "expo-router";
+import { useContext, useEffect, useRef } from "react";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
+import Footer from "../../components/Homefooter";
 import { CartContext } from "../../context/CartContext";
 
+const BASE_URL = "http://192.168.8.102:4500";
+
 export default function CartScreen() {
-  const { cart, removeFromCart, increaseQty, decreaseQty, totalPrice } = useContext(CartContext);
+  const { productId, action } = useLocalSearchParams();
+  const addedRef = useRef(false);
+
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    increaseQty,
+    decreaseQty,
+    totalPrice,
+  } = useContext(CartContext);
+
+  useEffect(() => {
+    if (productId && action === "add" && !addedRef.current) {
+      addedRef.current = true;
+      addProductToCart(productId);
+    }
+  }, [productId]);
+
+  const addProductToCart = async (id) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/products/${id}`);
+      const product = res.data;
+
+      addToCart({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.imageUrl,
+      });
+    } catch (err) {
+      console.log("Add to cart error", err);
+    }
+  };
 
   return (
-    <View style={styles.container}>
-
+    <><View style={styles.container}>
       <Text style={styles.heading}>My Cart</Text>
 
       {cart.length === 0 ? (
@@ -21,7 +58,7 @@ export default function CartScreen() {
         <>
           <FlatList
             data={cart}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View style={styles.card}>
                 <Image source={{ uri: item.image }} style={styles.image} />
@@ -31,13 +68,19 @@ export default function CartScreen() {
                   <Text style={styles.price}>Rs {item.price}</Text>
 
                   <View style={styles.qtyContainer}>
-                    <TouchableOpacity onPress={() => decreaseQty(item.id)} style={styles.qtyBtn}>
+                    <TouchableOpacity
+                      onPress={() => decreaseQty(item.id)}
+                      style={styles.qtyBtn}
+                    >
                       <Ionicons name="remove" size={18} />
                     </TouchableOpacity>
 
                     <Text style={styles.qty}>{item.qty}</Text>
 
-                    <TouchableOpacity onPress={() => increaseQty(item.id)} style={styles.qtyBtn}>
+                    <TouchableOpacity
+                      onPress={() => increaseQty(item.id)}
+                      style={styles.qtyBtn}
+                    >
                       <Ionicons name="add" size={18} />
                     </TouchableOpacity>
                   </View>
@@ -47,8 +90,7 @@ export default function CartScreen() {
                   <Ionicons name="trash" size={22} color="red" />
                 </TouchableOpacity>
               </View>
-            )}
-          />
+            )} />
 
           <View style={styles.bottomBar}>
             <Text style={styles.totalText}>Total: Rs {totalPrice}</Text>
@@ -59,7 +101,7 @@ export default function CartScreen() {
           </View>
         </>
       )}
-    </View>
+    </View><Footer /></>
   );
 }
 
@@ -67,100 +109,81 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 18,
+    padding: 16,
   },
-
   heading: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
-    marginVertical: 20,
+    marginBottom: 16,
   },
-
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#f8f8f8",
-    padding: 12,
-    borderRadius: 12,
-    marginVertical: 8,
-  },
-
-  image: {
-    width: 70,
-    height: 70,
-    borderRadius: 10,
-    marginRight: 12,
-  },
-
-  infoContainer: {
-    flex: 1,
-  },
-
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
-  price: {
-    fontSize: 15,
-    color: "#333",
-    marginVertical: 3,
-  },
-
-  qtyContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  qtyBtn: {
-    backgroundColor: "#ddd",
-    padding: 6,
-    borderRadius: 5,
-    marginHorizontal: 4,
-  },
-
-  qty: {
-    fontSize: 16,
-    marginHorizontal: 6,
-  },
-
-  bottomBar: {
-    padding: 15,
-    backgroundColor: "#fff",
-    borderTopWidth: 1,
-    borderColor: "#eee",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-
-  totalText: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-
-  checkoutBtn: {
-    backgroundColor: "#000",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-
-  checkoutText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-
   emptyContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-
   emptyText: {
-    marginTop: 10,
-    fontSize: 18,
+    fontSize: 16,
     color: "gray",
+    marginTop: 8,
+  },
+  card: {
+    flexDirection: "row",
+    backgroundColor: "#f5f5f5",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
+    alignItems: "center",
+  },
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  infoContainer: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  price: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 8,
+  },
+  qtyContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  qtyBtn: {
+    padding: 4,
+  },
+  qty: {
+    marginHorizontal: 8,
+    fontSize: 14,
+  },
+  bottomBar: {
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
+    paddingTop: 12,
+    marginTop: 12,
+  },
+  totalText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 12,
+  },
+  checkoutBtn: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  checkoutText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
