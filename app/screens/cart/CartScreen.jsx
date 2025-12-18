@@ -7,7 +7,7 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react
 import Footer from "../../components/Homefooter";
 import { CartContext } from "../../context/CartContext";
 
-const BASE_URL = "http://192.168.8.102:4500";
+const BASE_URL = "http://192.168.8.103:4500";
 
 export default function CartScreen() {
   const { productId, action } = useLocalSearchParams();

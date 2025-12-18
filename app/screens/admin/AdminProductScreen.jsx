@@ -27,7 +27,7 @@ export default function AdminProductsScreen() {
   async function loadProducts() {
     try {
       const response = await axios.get(
-        "http://192.168.8.102:4500/api/products"
+        "EXPO_PUBLIC_BACKEND_UR/api/products"
       );
       setProducts(response.data);
     } catch (error) {
@@ -58,7 +58,7 @@ export default function AdminProductsScreen() {
           onPress: async () => {
             try {
               await axios.delete(
-                "http://192.168.8.102:4500/api/product/" + id
+                "EXPO_PUBLIC_BACKEND_UR/api/product/" + id
               );
               loadProducts();
               Alert.alert("Success", "Product deleted successfully");

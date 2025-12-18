@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+import { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -9,11 +10,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
 import Footer from "../../components/Homefooter";
+import { CartContext } from "../../context/CartContext";
 
-const BASE_URL = "http://192.168.8.102:4500"; // change if needed
+const BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL; // change if needed
 
 export default function MenScreen() {
+  const router = useRouter();
+  const { addToCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +37,20 @@ export default function MenScreen() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAddToCart = (product) => {
+    addToCart({
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.imageUrl,
+    });
+    Toast.show({
+      type: "success",
+      text1: "Added to Cart",
+      text2: `${product.name} has been added to your cart.`,
+    });
   };
 
   if (loading) {
@@ -56,9 +75,9 @@ export default function MenScreen() {
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.price}>Rs. {item.price}</Text>
 
-            <TouchableOpacity style={styles.btn}
-              
-
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => handleAddToCart(item)}
             >
               <Text style={styles.btnText}>Add to Cart</Text>
             </TouchableOpacity>

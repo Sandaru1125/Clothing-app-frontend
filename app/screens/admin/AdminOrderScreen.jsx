@@ -34,7 +34,7 @@ export default function AdminOrderScreen() {
     try {
       const token = await AsyncStorage.getItem("token");
       const res = await axios.get(
-        "http://192.168.8.102:4500/api/order",
+        "EXPO_PUBLIC_BACKEND_UR/api/order",
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -51,7 +51,7 @@ export default function AdminOrderScreen() {
     try {
       const token = await AsyncStorage.getItem("token");
       await axios.put(
-        "http://192.168.8.102:4500/api/order/" + orderID,
+        "EXPO_PUBLIC_BACKEND_URL/api/order/" + orderID,
         { status },
         { headers: { Authorization: "Bearer " + token } }
       );
@@ -75,7 +75,7 @@ export default function AdminOrderScreen() {
             try {
               const token = await AsyncStorage.getItem("token");
               await axios.delete(
-                "http://192.168.8.102:4500/api/order/" + id,
+                "EXPO_PUBLIC_BACKEND_UR/api/order/" + id,
                 {
                   headers: { Authorization: "Bearer " + token },
                 }

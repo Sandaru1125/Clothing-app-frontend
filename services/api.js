@@ -1,4 +1,4 @@
-const BASE_URL = "http://192.168.8.102:4500"; 
+const BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL; 
 
 export const signup = async (data) => {
   try {

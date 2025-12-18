@@ -22,7 +22,7 @@ export default function AdminUsersScreen() {
 
     try {
       const res = await axios.get(
-        `http://192.168.8.102:4500/api/user`,
+        `EXPO_PUBLIC_BACKEND_UR/api/user`,
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -48,7 +48,7 @@ export default function AdminUsersScreen() {
 
     try {
       await axios.put(
-        `http://192.168.8.102:4500/api/user/${userId}/role`,
+        `EXPO_PUBLIC_BACKEND_UR/api/user/${userId}/role`,
         { role: newRole },
         {
           headers: { Authorization: "Bearer " + token },
