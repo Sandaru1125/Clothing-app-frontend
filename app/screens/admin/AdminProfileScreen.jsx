@@ -2,15 +2,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  Alert,
-  FlatList,
-  Picker,
-  Text,
-  View
+    ActivityIndicator,
+    Alert,
+    FlatList,
+    Picker,
+    Text,
+    View
 } from "react-native";
 import AdminFooter from "../../components/Adminfooter";
 
+const BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 export default function AdminUsersScreen() {
   const [users, setUsers] = useState([]);
@@ -22,7 +23,7 @@ export default function AdminUsersScreen() {
 
     try {
       const res = await axios.get(
-        `EXPO_PUBLIC_BACKEND_UR/api/user`,
+        `${BASE_URL}/api/user`,
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -48,7 +49,7 @@ export default function AdminUsersScreen() {
 
     try {
       await axios.put(
-        `EXPO_PUBLIC_BACKEND_UR/api/user/${userId}/role`,
+        `${BASE_URL}/api/user/${userId}/role`,
         { role: newRole },
         {
           headers: { Authorization: "Bearer " + token },

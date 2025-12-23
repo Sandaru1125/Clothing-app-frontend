@@ -2,18 +2,21 @@ import axios from "axios";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AdminFooter from "../../components/Adminfooter";
+
+const BASE_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
 
 export default function AdminProductsScreen() {
   const [products, setProducts] = useState([]);
@@ -27,7 +30,7 @@ export default function AdminProductsScreen() {
   async function loadProducts() {
     try {
       const response = await axios.get(
-        "EXPO_PUBLIC_BACKEND_UR/api/products"
+        `${BASE_URL}/api/products`
       );
       setProducts(response.data);
     } catch (error) {
@@ -58,7 +61,7 @@ export default function AdminProductsScreen() {
           onPress: async () => {
             try {
               await axios.delete(
-                "EXPO_PUBLIC_BACKEND_UR/api/product/" + id
+                `${BASE_URL}/api/product/` + id
               );
               loadProducts();
               Alert.alert("Success", "Product deleted successfully");
@@ -74,42 +77,45 @@ export default function AdminProductsScreen() {
 
   const renderProduct = ({ item }) => (
     <View style={styles.card}>
-      <View style={styles.rowBetween}>
-        <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productId}>#{item.productId}</Text>
-      </View>
+      <Image source={{ uri: item.imageUrl }} style={styles.productImage} />
+      <View style={styles.productDetails}>
+        <View style={styles.rowBetween}>
+          <Text style={styles.productName}>{item.name}</Text>
+          <Text style={styles.productId}>#{item.productId}</Text>
+        </View>
 
-      <Text style={styles.price}>Price: ${item.price}</Text>
-      <Text style={styles.price}>Label Price: ${item.labeledprice}</Text>
+        <Text style={styles.price}>Price: ${item.price}</Text>
+        <Text style={styles.price}>Label Price: ${item.labeledprice}</Text>
 
-      <Text
-        style={[
-          styles.stock,
-          item.stock > 10
-            ? { color: "green" }
-            : item.stock > 0
-            ? { color: "orange" }
-            : { color: "red" },
-        ]}
-      >
-        {item.stock} in stock
-      </Text>
-
-      <View style={styles.actions}>
-        <TouchableOpacity onPress={() => deleteProduct(item.productId)}>
-          <MaterialIcons name="delete" size={24} color="red" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            router.push({
-              pathname: "/screens/admin/AdminEditProductScreen",
-              params: { product: JSON.stringify(item) },
-            });
-          }}
+        <Text
+          style={[
+            styles.stock,
+            item.stock > 10
+              ? { color: "green" }
+              : item.stock > 0
+              ? { color: "orange" }
+              : { color: "red" },
+          ]}
         >
-          <Ionicons name="create-outline" size={24} color="blue" />
-        </TouchableOpacity>
+          {item.stock} in stock
+        </Text>
+
+        <View style={styles.actions}>
+          <TouchableOpacity onPress={() => deleteProduct(item.productId)}>
+            <MaterialIcons name="delete" size={24} color="red" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              router.push({
+                pathname: "/screens/admin/AdminEditProductScreen",
+                params: { product: JSON.stringify(item) },
+              });
+            }}
+          >
+            <Ionicons name="create-outline" size={24} color="blue" />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -176,10 +182,21 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "#fff",
-    padding: 15,
     borderRadius: 12,
     marginBottom: 12,
     elevation: 2,
+    flexDirection: "row",
+    padding: 10,
+  },
+  productImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+  },
+  productDetails: {
+    flex: 1,
+    marginLeft: 10,
+    justifyContent: "center",
   },
   rowBetween: {
     flexDirection: "row",

@@ -75,12 +75,26 @@ export default function WomenScreen() {
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.price}>Rs. {item.price}</Text>
 
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => handleAddToCart(item)}
-            >
-              <Text style={styles.btnText}>Add to Cart</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleAddToCart(item)}
+              >
+                <Text style={styles.btnText}>Add to Cart</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() =>
+                  router.push({
+                    pathname: "/screens/cart/Buynow",
+                    params: { product: JSON.stringify(item) },
+                  })
+                }
+              >
+                <Text style={styles.btnText}>Buy Now</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
         ListEmptyComponent={<Text style={styles.emptyText}>
@@ -121,11 +135,17 @@ const styles = StyleSheet.create({
     color: "green",
     marginVertical: 5,
   },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
   btn: {
     backgroundColor: "#000",
     padding: 10,
     borderRadius: 8,
-    marginTop: 8,
+    flex: 1,
+    marginHorizontal: 5,
   },
   btnText: {
     color: "#fff",
