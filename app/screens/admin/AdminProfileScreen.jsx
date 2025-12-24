@@ -2,12 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    Picker,
-    Text,
-    View
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Picker,
+  Text,
+  View
 } from "react-native";
 import AdminFooter from "../../components/Adminfooter";
 
@@ -76,6 +76,7 @@ export default function AdminUsersScreen() {
   const renderItem = ({ item }) => (
     <View
       style={{
+
         backgroundColor: "white",
         padding: 16,
         marginBottom: 12,

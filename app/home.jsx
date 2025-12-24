@@ -92,6 +92,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     padding: 20,
     backgroundColor: "#fefefe",
   },
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 180,
     borderRadius: 12,
+    objectFit: "cover",
   },
 
   // Categories
@@ -161,6 +163,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 140,
     borderRadius: 10,
+    resizeMode: "cover",
   },
   productName: {
     fontSize: 14,

@@ -163,6 +163,7 @@ export default function AdminProductsScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     flex: 1,
     padding: 15,
     backgroundColor: "#f2f4f7",

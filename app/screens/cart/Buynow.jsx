@@ -2,13 +2,13 @@ import axios from "axios";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import Footer from "../../components/Homefooter";
@@ -116,6 +116,7 @@ const Buynow = () => {
 export default Buynow;
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     padding: 20,
     backgroundColor: "#fff",
     flexGrow: 1,

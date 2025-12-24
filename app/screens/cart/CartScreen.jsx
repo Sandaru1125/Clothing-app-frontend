@@ -46,67 +46,72 @@ export default function CartScreen() {
   };
 
   return (
-    <><View style={styles.container}>
-      <Text style={styles.heading}>My Cart</Text>
+    <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={styles.heading}>My Cart</Text>
 
-      {cart.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Ionicons name="cart-outline" size={60} color="gray" />
-          <Text style={styles.emptyText}>Your cart is empty</Text>
-        </View>
-      ) : (
-        <>
-          <FlatList
-            data={cart}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View style={styles.card}>
-                <Image source={{ uri: item.image }} style={styles.image} />
-
-                <View style={styles.infoContainer}>
-                  <Text style={styles.title}>{item.name}</Text>
-                  <Text style={styles.price}>Rs {item.price}</Text>
-
-                  <View style={styles.qtyContainer}>
-                    <TouchableOpacity
-                      onPress={() => decreaseQty(item.id)}
-                      style={styles.qtyBtn}
-                    >
-                      <Ionicons name="remove" size={18} />
-                    </TouchableOpacity>
-
-                    <Text style={styles.qty}>{item.qty}</Text>
-
-                    <TouchableOpacity
-                      onPress={() => increaseQty(item.id)}
-                      style={styles.qtyBtn}
-                    >
-                      <Ionicons name="add" size={18} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-
-                <TouchableOpacity onPress={() => removeFromCart(item.id)}>
-                  <Ionicons name="trash" size={22} color="red" />
-                </TouchableOpacity>
-              </View>
-            )} />
-
-          <View style={styles.bottomBar}>
-            <Text style={styles.totalText}>Total: Rs {totalPrice}</Text>
-
-            <TouchableOpacity style={styles.checkoutBtn}>
-              <Text style={styles.checkoutText}>Checkout</Text>
-            </TouchableOpacity>
+        {cart.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Ionicons name="cart-outline" size={60} color="gray" />
+            <Text style={styles.emptyText}>Your cart is empty</Text>
           </View>
-        </>
-      )}
-    </View><Footer /></>
+        ) : (
+          <>
+            <FlatList
+              data={cart}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <View style={styles.card}>
+                  <Image source={{ uri: item.image }} style={styles.image} />
+
+                  <View style={styles.infoContainer}>
+                    <Text style={styles.title}>{item.name}</Text>
+                    <Text style={styles.price}>Rs {item.price}</Text>
+
+                    <View style={styles.qtyContainer}>
+                      <TouchableOpacity
+                        onPress={() => decreaseQty(item.id)}
+                        style={styles.qtyBtn}
+                      >
+                        <Ionicons name="remove" size={18} />
+                      </TouchableOpacity>
+
+                      <Text style={styles.qty}>{item.qty}</Text>
+
+                      <TouchableOpacity
+                        onPress={() => increaseQty(item.id)}
+                        style={styles.qtyBtn}
+                      >
+                        <Ionicons name="add" size={18} />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity onPress={() => removeFromCart(item.id)}>
+                    <Ionicons name="trash" size={22} color="red" />
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+
+            <View style={styles.bottomBar}>
+              <Text style={styles.totalText}>Total: Rs {totalPrice}</Text>
+
+              <TouchableOpacity style={styles.checkoutBtn}>
+                <Text style={styles.checkoutText}>Checkout</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
+      </View>
+      <Footer />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     flex: 1,
     backgroundColor: "#fff",
     padding: 16,

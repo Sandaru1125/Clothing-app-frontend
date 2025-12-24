@@ -71,7 +71,7 @@ export default function WomenScreen() {
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Image source={{ uri: item.imageUrl }} style={styles.image} />
-
+               <Text style={styles.productName}>{item.productId}</Text>
             <Text style={styles.productName}>{item.name}</Text>
             <Text style={styles.price}>Rs. {item.price}</Text>
 
@@ -105,6 +105,7 @@ export default function WomenScreen() {
 }
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     flex: 1,
     padding: 16,
     backgroundColor: "#fff",

@@ -2,12 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    View,
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import AdminFooter from "../../components/Adminfooter";
 
@@ -37,9 +37,11 @@ export default function AdminOrderScreen() {
 
   const renderOrder = ({ item }) => (
     <View style={styles.card}>
-      <Text style={styles.customer}>Product ID: {item.product}</Text>
+      <Text style={styles.customer}>
+        Product ID: {item.billItems?.[0]?.product?._id}
+      </Text>
       <Text style={styles.customer}>Name: {item.name}</Text>
-      <Text style={styles.customer}>Phone: {item.phone}</Text>
+      <Text style={styles.customer}>Phone: {item.phoneNumber}</Text>
       <Text style={styles.customer}>Address: {item.address}</Text>
       <Text style={styles.customer}>City: {item.city}</Text>
       <Text style={styles.date}>
@@ -76,6 +78,7 @@ export default function AdminOrderScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 40,
     flex: 1,
     padding: 15,
     backgroundColor: "#eef2ff",

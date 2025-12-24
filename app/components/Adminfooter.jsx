@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const AdminFooter = () => {
-  const pathname = usePathname(); // Detect active route
+  const pathname = usePathname();
   const [active, setActive] = useState("users");
 
   useEffect(() => {
@@ -15,6 +15,13 @@ const AdminFooter = () => {
     if (pathname.includes("AdminProductScreen")) setActive("products");
     if (pathname.includes("AdminOrderScreen")) setActive("orders");
   }, [pathname]);
+
+  const handleLogout = () => {
+    // 🔴 If you use AsyncStorage / token, clear it here
+    // await AsyncStorage.removeItem("token");
+
+    router.replace("/home"); // navigate to home.jsx
+  };
 
   return (
     <View style={styles.container}>
@@ -49,9 +56,7 @@ const AdminFooter = () => {
           size={26}
           color={active === "products" ? "#007bff" : "#555"}
         />
-        <Text
-          style={[styles.label, active === "products" && styles.activeLabel]}
-        >
+        <Text style={[styles.label, active === "products" && styles.activeLabel]}>
           Products
         </Text>
       </TouchableOpacity>
@@ -73,38 +78,42 @@ const AdminFooter = () => {
           Orders
         </Text>
       </TouchableOpacity>
+
+      {/* Logout */}
+      <TouchableOpacity style={styles.btn} onPress={handleLogout}>
+        <Ionicons name="log-out-outline" size={26} color="#dc3545" />
+        <Text style={[styles.label, { color: "#dc3545" }]}>
+          Logout
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default AdminFooter;
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 12,
-    paddingHorizontal: 25,
+    justifyContent: "space-around",
+    alignItems: "center",
     backgroundColor: "#fff",
     borderTopWidth: 1,
-    borderColor: "#ddd",
-    elevation: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: -2 },
-    shadowRadius: 6,
+    borderTopColor: "#ddd",
+    paddingVertical: 10,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
   },
   btn: {
     alignItems: "center",
-    flex: 1,
   },
   label: {
     fontSize: 12,
     color: "#555",
-    marginTop: 2,
+    marginTop: 4,
   },
   activeLabel: {
     color: "#007bff",
-    fontWeight: "600",
   },
 });
+
+export default AdminFooter;
